@@ -1,0 +1,7 @@
+Paciente: Ana Gómez
+Fecha: 14/03/2026
+Laboratorio: Clínica Central
+
+Glucosa 110 mg/dL 70-99
+Hemoglobina 13.8 g/dL 12-16
+Hematocrito 42 % 36-46

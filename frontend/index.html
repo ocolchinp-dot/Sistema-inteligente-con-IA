@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analizador de Laboratorio con IA</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Analizador de resultados de laboratorio</h1>
+      <p class="subtitle">Carga un PDF o imagen y obtén una salida estructurada, validada y trazable.</p>
+
+      <div class="card">
+        <input id="fileInput" type="file" accept=".pdf,.png,.jpg,.jpeg,.bmp,.tiff,.webp" />
+        <button id="analyzeBtn">Analizar documento</button>
+        <p id="status" class="status">Estado: listo</p>
+      </div>
+
+      <div class="grid">
+        <section class="card">
+          <h2>Resultado estructurado</h2>
+          <pre id="jsonResult">{}</pre>
+        </section>
+        <section class="card">
+          <h2>Advertencias y aclaraciones</h2>
+          <ul id="warnings"></ul>
+          <ul id="questions"></ul>
+        </section>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
