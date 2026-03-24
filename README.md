@@ -73,7 +73,32 @@ frontend/
   app.js
 samples/
   lab_sample.txt
+scripts/
+  deploy_azure_container.sh
+Dockerfile
+.dockerignore
 README.md
+```
+
+## Subir a GitHub (comandos rápidos)
+
+Si ya creaste el repo vacío en GitHub (sin README), ejecuta desde la carpeta del proyecto:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/<TU_USUARIO>/<TU_REPO>.git
+git push -u origin main
+```
+
+Si ya tienes git inicializado y solo quieres enlazar/pushear:
+
+```bash
+git remote remove origin 2>/dev/null || true
+git remote add origin https://github.com/<TU_USUARIO>/<TU_REPO>.git
+git push -u origin $(git branch --show-current)
 ```
 
 ## Ejecución local
@@ -105,6 +130,62 @@ python -m http.server 5500
 ```
 
 Abrir: `http://localhost:5500`
+
+## Docker (1 contenedor para API)
+
+Construir imagen:
+
+```bash
+docker build -t lab-analyzer:latest .
+```
+
+Ejecutar local:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -e OPENAI_API_KEY="<TU_API_KEY>" \
+  -e OPENAI_MODEL="gpt-4.1-mini" \
+  lab-analyzer:latest
+```
+
+Probar healthcheck:
+
+```bash
+curl http://localhost:8000/health
+```
+
+## Deploy en Azure Container Apps
+
+Prerequisitos:
+
+- Azure CLI (`az`) instalada.
+- Sesión iniciada: `az login`.
+
+Script incluido para desplegar a Azure con ACR + Container App:
+
+```bash
+./scripts/deploy_azure_container.sh \
+  <resource_group> \
+  <location> \
+  <acr_name_unico> \
+  <container_app_name> \
+  <image_name> \
+  8000
+```
+
+Ejemplo:
+
+```bash
+./scripts/deploy_azure_container.sh rg-lab eastus acrlabdemo lab-analyzer-api lab-analyzer 8000
+```
+
+El script:
+
+1. Crea Resource Group.
+2. Crea Azure Container Registry.
+3. Construye la imagen en ACR.
+4. Crea entorno de Container Apps.
+5. Despliega el contenedor con ingress público.
 
 ## Uso
 
